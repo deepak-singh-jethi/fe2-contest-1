@@ -1,67 +1,131 @@
-let arr = [
-  { id: 1, name: 'john', age: 18, profession: 'developer' },
-  { id: 2, name: 'jack', age: 20, profession: 'developer' },
-  { id: 3, name: 'karen', age: 19, profession: 'admin' },
+const data = [
+  { name: "john", age: 25, profession: "developer" },
+  { name: "jane", age: 23, profession: "admin" },
+  { name: "jasmine", age: 32, profession: "CEO" },
+  { name: "michle", age: 24, profession: "sales manager" },
 ];
 
-// Don't worry about consoling these functions, they are already being called on the button clicks.
-// Please don't change anything in the index.html file.
-
-
-// printing only develpoers
-function PrintDeveloper() {
-  for(let i of arr){
-    if(i.profession=="developer"){
-      console.log(i);
+// 1. Print Developers
+function printDeveloper() {
+  data.forEach((person) => {
+    if (person.profession === "developer") {
+      console.log(person);
     }
-  } 
-
-};
-
-
-
-
-
-//pushing one employee
-
-function addData() {
-
-  arr.push({
-    id: 10, name: 'rama', age: 29, profession: 'marketing head'
   });
-  
-  console.log(arr);
 }
 
+// 2. Add Data
+function addData() {
+  let newName = prompt("Enter Name");
+  let newAge = Number(prompt("Enter Age"));
+  let newProfession = prompt("enter Profession");
 
+  let newObj = { name: newName, age: newAge, profession: newProfession };
+  data.push(newObj);
+}
 
-// remove admin
+// 3. Remove Admins
 function removeAdmin() {
-arr =  arr.filter((employee)=>
-  employee.profession!='admin')
-console.log(arr);
-
-};
-
-
-// append another array in main array
-function concatenateArray() {
-  let newArr = [
-    { id: 5, name: 'deepak', age: 25, profession: 'developer' },
-  { id: 8, name: 'tanuja', age: 24, profession: 'tester' }
-  ];
-  
-  arr=arr.concat(newArr);
-  console.log(arr);
+  data.forEach((person, index) => {
+    if (person.profession === "admin") {
+      data.splice(index, 1);
+    }
+  });
+  console.log(data);
 }
 
+// 4. Concatenate Array
+function concatenateArray() {
+  let dummyArr = [
+    { name: "michle", age: 30, profession: "teacher" },
+    { name: "maxwell", age: 39, profession: "archaeologist" },
+  ];
+  dummyArr = dummyArr.concat(data);
 
+  console.log(dummyArr);
+}
 
-// Here is an example of how functions work,
-// basically a function is a block of code which can directly access your 'arr' variable since arr is global.
-// If I have a function called consoleArr(), that can directly access arr like this to console it.
+// 5. Average Age
+function averageAge() {
+  let totalAge = 0;
+  data.forEach((person) => {
+    totalAge += person.age;
+  });
 
-function consoleArr() {
-  console.log('Consoling Array Variable', arr);
-  // Over here I can directly access the variable.
+  console.log(totalAge / data.length);
+}
+
+// 6. Age Check
+function checkAgeAbove25() {
+  let found = false;
+  data.forEach((person) => {
+    if (person.age > 25) {
+      console.log("Yes.. their is atleast one person whose age is above 25");
+
+      found = true;
+
+      return;
+    }
+  });
+
+  if (!found) {
+    console.log("No person found with age above 25");
+  }
+}
+
+// 7. Unique Professions
+function uniqueProfessions() {
+  let professionArr = [];
+
+  data.forEach((person) => {
+    if (!professionArr.includes(person.profession)) {
+      professionArr.push(person.profession);
+    }
+  });
+
+  console.log(professionArr);
+}
+
+// 8. Sort by Age
+function sortByAge() {
+  data.sort(function (a, b) {
+    if (a.age > b.age) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+
+  console.log(data);
+}
+
+// 9. Update Profession
+function updateJohnsProfession() {
+  data.forEach((person) => {
+    if (person.name === "john") {
+      person.profession = "manager";
+    }
+  });
+
+  console.log(data);
+}
+
+// 10. Profession Count
+function getTotalProfessions() {
+  let devCount = 0;
+  let adminCount = 0;
+
+  data.forEach((person) => {
+    if (person.profession === "developer") {
+      devCount++;
+    } else if (person.profession === "admin") {
+      adminCount++;
+    }
+  });
+
+  console.log(
+    `There ${devCount > 0 ? "is" : "are"} ${devCount}  ${
+      devCount > 1 ? "developers" : "developer"
+    } and ${adminCount} ${adminCount > 1 ? "admins" : "admin"} in the data`
+  );
 }
